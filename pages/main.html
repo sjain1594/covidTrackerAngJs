@@ -1,0 +1,173 @@
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+    <title>
+        Product display App 
+    </title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.5.2/css/bootstrap.css">
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.12.1/css/dataTables.bootstrap4.min.css" />  
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.3.0/css/font-awesome.css" integrity="sha512-XJ3ntWHl40opEiE+6dGhfK9NAKOCELrpjiBRQKtu6uJf9Pli8XY+Hikp7rlFzY4ElLSFtzjx9GGgHql7PLSeog==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    
+    <link rel="stylesheet" href="/css/qm-style.css" />
+    <link rel="stylesheet" href="/css/main.css" />
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.4/jquery.min.js"></script>
+    <script src="https://cdn.datatables.net/1.12.1/js/jquery.dataTables.min.js"></script> 
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.min.js" integrity="sha384-IDwe1+LCz02ROU9k972gdyvl+AESN10+x7tBKgc9I5HFtuNz0wWnPclzo6p9vxnk" crossorigin="anonymous"></script>
+    <script src="https://cdn.datatables.net/1.12.1/js/dataTables.bootstrap4.min.js"></script>  
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.3/angular.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.3.15/angular-route.min.js"></script>
+    
+    <script type="text/javascript" src="/js/main.js"></script>
+    <script type="text/javascript" src="/js/service/main.service.js"></script>
+    <script type="text/javascript" src="/js/config/config.js"></script>
+    <!-- <script src="js/app.router.js"></script> -->
+    <script src=""></script>
+</head>
+<body ng-app="app">
+    <header class=" text-primary border border-light border-2 rounded-1 bg-light p-1 text-center fw-bold fs-5">
+        <ul class="nav">
+         <li class="nav-item">
+           <a class="nav-link" href="/pages/index.html">Corona Report</a>
+         </li>
+         <li class="nav-item">
+           <a class="nav-link" href="/pages/main.html">Products Report</a>
+         </li>
+       </ul>
+       </header>
+    <div  class="content full-width" ng-controller="crudeOperation">
+        <div class="d-flex justify-content-center m-5" ng-if="!showData">
+            <div class="spinner-border text-info" role="status" style="width: 4rem; height: 4rem">
+            <span class="visually-hidden">Loading...</span>
+            </div>
+        </div>
+        <div class="pagecontainer">
+            <div class="ele-margin-bottom cmn-hdr-wrap">
+                <span class="cmn-hdr-txt">Crude Operation Report</span>
+                <div class="clear"></div>
+            </div>
+            <div class="row">
+                <div class="col-sm-12  right-section">
+					<div class="ele-bdr ele-shadow">
+						<button type="button" ng-click="addNewProductModel()" class="btn dir-right btn-primary addBtn" data-bs-toggle="modal" data-bs-target="#addNewProductModel">
+							<i class="fa fa-plus"></i> <span>Add</span>
+						</button>
+						<h3 class="ele-padding-sml blue-txt semibold-txt ele-hdr"> Product Table</h3>
+							
+						<div>
+							<table class="table table-condensed table-bordered table-hover" id="productTable"></table>
+						</div>
+							
+					</div>
+				</div> <!-- end div of right block -->
+
+				<div class="clear"></div>
+            </div>
+        </div>
+        
+
+        <!-- Add Product Modal -->
+        <div class="modal fade" id="addNewProductModel" tabindex="-1" aria-labelledby="addNewProductModelLabel" aria-hidden="true">
+            <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                <h4 class="modal-title" id="exampleModalLabel">Add New Product</h4>
+                <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                </div>
+                <div class="modal-body">
+                <form name="productDetailForm">
+                    <div class="mb-2">
+                    <label class="form-label">Title</label>
+                    <input type="text" class="form-control" id="title" ng-model="product.title" required>
+                    </div>
+                    <div class="mb-2">
+                    <label class="form-label">Price</label>
+                    <input type="number" class="form-control" id="price" ng-model="product.price" required>
+                    </div>
+                    <div class="mb-2">
+                    <label class="form-label">Description</label>
+                    <textarea class="form-control" id="description" rows="3" ng-model="product.description" required></textarea>
+                    </div>
+                    <div class="mb-2">
+                    <label class="form-label">Category</label>
+                    <input type="text" class="form-control" id="category" ng-model="product.category" required>
+                    </div>
+                    <div class="mb-2">
+                    <label class="form-label">Image Url</label>
+                    <input type="text" class="form-control" id="image" ng-model="product.image" required>
+                    </div>
+                    <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary btn-sm" data-bs-dismiss="modal">Close</button>
+                    <button type="submit" class="btn btn-primary btn-sm"  ng-click="addProduct()" ng-disabled="productDetailForm.$invalid" data-bs-dismiss="modal">Add</button>
+                    </div>
+                </form>
+                </div>
+        
+            </div>
+            </div>
+        </div>
+
+        <!-- Confirmation Modal -->
+        <div class="modal fade" id="deleteProductModal" tabindex="-1" aria-labelledby="deleteProductModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                <h5 class="modal-title">Delete Product</h5>
+                <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                </div>
+                <div class="modal-body">
+                <strong>Are you sure you want to delete?</strong>      
+                </div>
+                <div class="modal-footer">
+                <button type="button" class="btn btn-sm btn-secondary" data-bs-dismiss="modal">No</button>
+                <button type="button" class="btn btn-sm btn-primary" ng-click="deleteProduct()" data-bs-dismiss="modal">Yes</button>
+                </div>
+            </div>
+            </div>
+        </div>
+
+        <!-- Edit Product Modal -->
+        <div class="modal fade" id="editProductModal" tabindex="-1" aria-labelledby="editProductModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Edit Product</h5>
+                <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                </div>
+                <div class="modal-body">
+                <form name="editProductForm">
+                    <div class="mb-2">
+                    <label class="form-label">Title</label>
+                    <input type="text" class="form-control" id="title" ng-model="product.title" required>
+                    </div>
+                    <div class="mb-2">
+                    <label class="form-label">Description</label>
+                    <textarea class="form-control" id="description" rows="3" ng-model="product.description" required></textarea>
+                    </div>
+                    <div class="mb-2">
+                    <label class="form-label">Price</label>
+                    <input type="number" class="form-control" id="price" ng-model="product.price" required>
+                    </div>
+                    <div class="mb-2">
+                    <label class="form-label">Category</label>
+                    <input type="text" class="form-control" id="category" ng-model="product.category" required>
+                    </div>
+                    <div class="mb-2">
+                    <label class="form-label">Image Url</label>
+                    <input type="text" class="form-control" id="image" ng-model="product.image" required>
+                    </div>
+                    <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary btn-sm" data-bs-dismiss="modal">Close</button>
+                    <button type="submit" class="btn btn-primary btn-sm"  ng-click="UpdateData()" ng-disabled="editProductForm.$invalid" data-bs-dismiss="modal">Update</button>
+                    </div>
+                </form>
+                </div>
+        
+            </div>
+            </div>
+        </div>
+
+    </div>
+</body>
+</html>

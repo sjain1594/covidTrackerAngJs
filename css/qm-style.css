@@ -1,0 +1,440 @@
+
+/* Basic Elements */
+html, body {
+	position: relative;
+	color: #2F2F2F;
+	font-family: 'Open Sans', Segoe UI, Verdana;
+	font-size: 13px;
+	height: 100vh;
+	width: 100%;
+	margin: 0px;
+	padding: 0px;
+	background: whitesmoke;
+}
+
+a {
+	text-decoration: none;
+}
+
+h3 {
+	font-size: 15px;
+	font-weight: 600;
+}
+
+/* .................. Style for Scrollbar ................... */
+::-webkit-scrollbar {
+	width: 10px;
+	height: 10px;
+}
+
+::-webkit-scrollbar-track-piece {
+	background-color: #DFE0E1;
+}
+
+::-webkit-scrollbar-thumb {
+	background-color: #C4C4C5;
+	border: 1px solid #A5A6A6;
+}
+
+/* .................. Common Style for all pages ................... */
+.dir-left {
+	float: left;
+}
+
+.dir-right {
+	float: right;
+}
+
+.clear {
+	clear: both;
+}
+
+.pos-abs {
+	position: absolute;
+}
+
+.pos-rel {
+	position: relative;
+}
+
+.text-center {
+	text-align: center;
+}
+
+.white-txt {
+	color: #F9F9F9;
+}
+
+/* acc to calance color  */
+.blue-txt {
+	color: #0f2886f2;
+}
+.orange-txt {
+	color: #524a49f2;
+}
+
+.semibold-txt {
+	font-weight: 600;
+}
+
+.ele-hide {
+	display: none;
+}
+
+.ele-margin {
+	margin: 10px;
+}
+
+.ele-margin-left {
+	margin-left: 10px;
+}
+
+.ele-margin-right {
+	margin-right: 10px;
+}
+
+.ele-margin-top {
+	margin-top: 10px;
+}
+
+.ele-margin-top-15{
+	margin-top:15px;
+}
+.ele-margin-bottom {
+	margin-bottom: 10px;
+}
+
+.ele-margin-bottom-small {
+	margin-bottom: 5px;
+	position:relative;
+}
+.ele-margin-bottom-big {
+	margin-bottom: 20px;
+	position:relative;
+}
+
+.ele-padding {
+	padding: 10px;
+}
+
+.ele-padding-big {
+	padding: 20px;
+}
+
+.ele-padding-sml {
+	padding: 5px 10px;
+}
+
+.ele-bdr {
+	border: 1px solid #D0D0D0;
+}
+
+.ele-bdr-bottom {
+	border-bottom: 1px solid #9A9A9A;
+}
+
+.ele-shadow {
+	box-shadow: 1px 3px 10px #C6C6C6;
+	background-color: #ffffff;
+}
+
+.ele-click {
+	cursor: pointer;
+}
+
+.ele-btn {
+	background-color: #0F7ABE;
+	border: 0px;
+	border-radius: 3px;
+	line-height: 28px;
+	min-width: 80px;
+}
+
+.ele-btn:hover {
+	-webkit-box-shadow: 3px 3px 6px 0px rgba(112, 112, 112, 1);
+	-moz-box-shadow: 3px 3px 6px 0px rgba(112, 112, 112, 1);
+	box-shadow: 3px 3px 6px 0px rgba(112, 112, 112, 1);
+}
+
+.ele-textbox {
+	border: 0px;
+	border-bottom: 1px solid #9A9A9A;
+	background-color: transparent;
+	width: 58%;
+	padding: 2px 0px;
+	font-family: 'Open Sans', Segoe UI, Verdana;
+}
+
+.ele-textarea {
+	width: 57.5%;
+	height: 80px;
+	margin-top: 10px;
+	resize: none;
+	overflow-y: auto;
+	font-family: 'Open Sans', Segoe UI, Verdana;
+}
+
+textarea:focus, input:focus, select:focus {
+	border-bottom: 1px solid #0F7ABE;
+	outline: none;
+}
+.pagecontainer {
+	padding-right: 15px;
+	padding-left: 15px;
+	margin: 10px auto 50px;
+}
+
+@media ( min-width : 992px) {
+	.pagecontainer {
+		width: 100%;
+	}
+}
+@media ( min-width : 1200px) {
+	.pagecontainer {width: 100%};
+}
+.page-hdr {
+	font-weight: 300;
+	font-size: 28px;
+}
+
+.ele-hdr {
+	border-bottom: 1px solid #D4D4D4;
+	/* line-height: 26px; */
+    line-height: 20px; /* acc to add btn width  */
+}
+
+.full-width {
+	width: 100%;
+}
+
+/* .................. Style for Page containers ................... */
+.container {
+	min-height: 100%;
+	width: 96%;
+}
+
+.content {
+	padding-top: 5px;
+/* 	min-height: 500px; */
+	/* min-height: 700px; */
+	padding-bottom: 5px;
+	background-color: #F5F5F5;
+}
+.gridStructure {
+	height: 540px;
+	width: 100%;
+}
+
+.allGridProperties {
+	/* height: 417px; */
+	height: 452px;
+	width: 100%;
+	display: block;
+	position: absolute;
+	left: -999999;
+}
+
+.content-margin {
+	margin: 0px 6%;
+}
+
+.ele-block {
+	background-color: #ffffff;
+	border: 1px solid #A7A7A7;
+	box-shadow: -2px 3px 6px #B6B6B6;
+}
+
+element.style {
+	padding-right: 4%;
+}
+
+.overflowHidden {
+	overflow-y: hidden;
+}
+
+.heightFixed {
+	height: 470px;
+}
+
+.ui-state-active a, .ui-state-active a:link, .ui-state-active a:visited
+	{
+	color: #000000;
+	text-decoration: none;
+}
+
+.disable-form {
+	background-color: #bdbbbb !important;
+	opacity: .5;
+}
+
+.ui-dialog {
+	z-index: 999999 !important;
+}
+
+span.red {
+	color: red;
+	font-weight:bold;
+}
+
+/* loader spinner css */
+.loader {
+	z-index: 9999 !important;
+	position: absolute;
+	top: 50%;
+	left: 50%;
+	border: 16px solid #f3f3f3;
+	border-radius: 50%;
+	border-top: 16px solid blue;
+	border-right: 16px solid green;
+	border-bottom: 16px solid red;
+	width: 80px;
+	height: 80px;
+	-webkit-animation: spin 2s linear infinite;
+	animation: spin 2s linear infinite;
+}
+
+@keyframes spin { 
+	0% {transform: rotate(0deg);}
+	100%{transform:rotate(360deg);}
+}
+.overlay {
+	z-index: 9999999 !important;
+	position: absolute;
+	top: 0;
+	left: 0;
+	width: 100%;
+	height: 100%;
+	z-index: 10;
+	background-color: rgba(0, 0, 0, 0.5);
+	/*dim the background*/
+}
+
+.hidden {display: none;}
+
+input:-webkit-autofill {
+	-webkit-box-shadow: 0 0 0 1000px white inset !important;
+}
+
+span.red {
+	color: red;
+}
+
+.onEditHeight {
+	width: 58%;
+	min-height: 50px;
+}
+
+/* media query for dialog pop up, footer on big screen */
+@media screen and (min-width:2160px){
+	.ui-dialog {
+    left: 50% !important;
+    top: 15% !important;
+    margin-left: -175px !important; 
+    margin-top: -175px !important; 
+}
+}
+
+.text-blue.c-pointer{color: #4b6bdb; text-decoration:none; cursor:pointer;}
+.text-blue.c-pointer:hover{text-decoration:underline;}
+.k-label{ width:165px;display: inline-block;
+overflow-wrap: break-word!important;
+word-wrap: break-word!important;
+word-break: normal!important;
+line-break: strict!important;
+hyphens: none!important;
+-webkit-hyphens: none!important;
+-moz-hyphens: none!important;} 
+
+.k-grid-filter.k-state-active{background-color:#ffffff;}
+.toggle.btn{min-width:123px;}
+
+/* fix GDS-511 */
+.modal.fade {
+  z-index:7777777 !important;
+}
+
+.ui-dialog {
+	z-index:8888888 !important;
+}
+
+.ui-autocomplete {
+    z-index:9999999;
+    max-height:200px;
+    overflow-y:scroll;
+}
+/* acc to calance color already present in bootstrap min .css  */
+.btn-primary {
+    color: #fff;
+    background-color: #0f2886c9 !important;
+    border-color: #2e6da4;
+}
+/* acc to calance color already present in bootstrap min .css  */
+.btn-primary:hover {
+    color: #fff;
+    background-color: #2e6da4!important;
+    border-color: #2e6da4;
+}
+/* acc to calance color already present in kendocommon-material.min.css  */
+.k-grid .k-icon:hover {
+    opacity: .45!important;
+}
+/* acc to calance color already present in kendocommon-material.min.css  */
+.k-grid .k-icon {
+    opacity: 1!important;
+}
+.modal-header {background-color: #4256a0;}
+.modal-title{color: #fff;}
+.close{color: #fff;}
+.ui-dialog.ui-widget.ui-widget-content.ui-corner-all.ui-front.noclose.ui-dialog-buttons.ui-draggable {
+    border-radius: 5px;
+}
+.ui-dialog-titlebar.ui-widget-header.ui-corner-all.ui-helper-clearfix.ui-draggable-handle {
+    background-color: #4256a0;
+    color: #fff;
+}
+.ui-dialog-titlebar.ui-widget-header.ui-corner-all.ui-helper-clearfix {
+    background-color: #4256a0;
+    color: #fff;
+}
+.ui-dialog-buttonset button {
+    background: #4256a0;
+    border-color: #2e6da4;
+    color: #fff;
+}
+.ui-dialog-buttonset button:hover {
+    background: #2e6da4;
+    border-color: #2e6da4;
+    color: #fff;
+}
+button#modalCloseButton {
+    color: #fff;
+    background: #4256a0;
+}
+button#modalCloseButton:hover {
+    color: #fff;
+    background: #2e6da4;
+}
+button.close.pull-right {
+	opacity: 0.7;
+    margin-top: 5px;
+}
+button.close.pull-right:hover {
+	color: #fff;
+	opacity: 1;
+}
+.active_link{
+    border-bottom-color: #f96332 !important;
+    /* border-bottom-color: #b8202d; */
+    color: rgb(97, 174, 202);
+    font-weight: 600;
+    background: #ffffff;
+}
+.cmn-hdr-wrap {
+	background: #f96332;
+    color: #fff;
+}
+.cmn-hdr-txt {
+	font-size: 19px;
+	font-weight: 500;
+	padding-left: 12px;
+}
