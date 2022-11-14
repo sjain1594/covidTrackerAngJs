@@ -1,3 +1,4 @@
+
 app.service('coronaService', ['$http' , "$q", function($http, $q){
     this.findCasesByCountry = function(COUNTRY_NAME){
         var deferred = $q.defer();
