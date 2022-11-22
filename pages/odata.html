@@ -1,0 +1,153 @@
+<div  class="content full-width">
+    <div class="d-flex justify-content-center m-5" ng-if="!showData">
+        <div class="spinner-border text-info" role="status" style="width: 4rem; height: 4rem">
+        <span class="visually-hidden">Loading...</span>
+        </div>
+    </div>
+    <div class="pagecontainer">
+        <div class="ele-margin-bottom cmn-hdr-wrap">
+            <span class="cmn-hdr-txt">OData Api Integration</span>
+            <div class="clear"></div>
+        </div>
+        <div class="">
+            <form>
+                <div class="form-group col-sm-12 col-md-12">
+                    <label><span>ApiUrl</span></label>
+                    <textarea type="text" class="form-control" style="min-height:auto !important">{{apiRootUrl}}</textarea>
+                </div>
+                <div class="form-group col-md-12 col-sm-12">
+                    <label><span>Select Operation to Perform</span></label>
+                    <select class="form-control form-dropdown" ng-model="selOperation" ng-change="operationValue()" required>
+                        <option value="">---Please Select---</option>
+                        <option value="QueringData">Quering the Data</option>
+                        <option value="UpdatingData">Updating the Data</option>
+                    </select>
+                </div>
+                <div ng-show="Quering">
+                    <div class="col-sm-12 col-md-12 row">
+                        <div class="form-group col-md-6 col-sm-6">
+                            <label><span>Select Entity</span></label>
+                            <select class="form-control form-dropdown" ng-model="entityName" ng-change="entityChange()">
+                                <option value="">---Please Select---</option>
+                                <option ng-repeat="entity in entities" ng-value="'/'+ entity.name">{{entity.name}}</option>
+                            </select>
+                        </div>
+                        <div class="col-md-6 col-sm-6 row">
+                            <div class="form-group col-md-6 col-sm-6">
+                                <label><span>Select Filter</span></label>
+                                <select class="form-control form-dropdown" ng-model="filterName" ng-change="filterChange()">
+                                    <option value="">---Select ID ---</option>
+                                    <option value="count">Count</option>
+                                    <option value="select">Select</option>
+                                    <option value="orderby">OrderBy</option>
+                                    <option value="top">Top</option>
+                                    <option value="filter">Filter</option>
+                                    <option value="expand">Expand</option>
+                                    <option value="pagination">Pagination</option>
+                                </select>
+                            </div>
+                            <div class="form-group col-md-6 col-sm-6" ng-show="otherSel">
+                                <label><span>Select Sub-Entity</span></label>
+                                <select class="form-control form-dropdown" ng-model="subEntityName" ng-change="">
+                                    <option value="">Select Sub-Entity</option>
+                                    <option value="ID">ID</option>
+                                    <option value="Name">Name</option>
+                                </select>
+                            </div>
+                            <div class="form-group col-md-6 col-sm-6" ng-show="topSel">
+                                <label><span>Enter Number</span></label>
+                                <input type="number" class="form-control" ng-model="number" />
+                            </div>
+                            <div class="form-group col-md-6 col-sm-6" ng-show="filterSel">
+                                <label><span>Enter Value</span></label>
+                                <input type="text" class="form-control" ng-model="value" />
+                            </div>
+                            <div class="form-group col-md-6 col-sm-6" ng-show="paginationSel">
+                                <label><span>Select PageSize</span></label>
+                                <select class="form-control form-dropdown" ng-model="pageSize" ng-change="pageSizeChange()">
+                                    <option value="">---Please Select---</option>
+                                    <option value="5">5</option>
+                                    <option value="10">10</option>
+                                    <option value="15">15</option>
+                                    <option value="20">20</option>
+                                </select>
+                            </div>
+                            <div class="form-group col-md-6 col-sm-6" ng-show="paginationSel">
+                                <label><span>Select Page No.</span></label>
+                                <select class="form-control form-dropdown" ng-model="pageNo" ng-change="pageNoChange()">
+                                    <option value="">---Select No---</option>
+                                    <option value="1">1</option>
+                                    <option value="2">2</option>
+                                    <option value="3">3</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div ng-show="Updating">
+                    <div class="col-sm-12 col-md-12 row">
+                        <div class="form-group col-md-6 col-sm-6">
+                            <label><span>Method</span></label>
+                            <select class="form-control form-dropdown" ng-model="method" ng-change="methodValue()" required>
+                                <option value="">---Please Select---</option>
+                                <option value="GET">GET</option>
+                                <option value="DELETE">DELETE</option>
+                                <option value="PATCH">PATCH</option>
+                                <option value="POST">POST</option>
+                            </select>
+                        </div>
+                        <!-- <div class="form-group col-md-6 col-sm-6" ng-show="!deleteSelected">
+                            <label><span>Select Entity</span></label>
+                            <select class="form-control form-dropdown" ng-model="entityName" ng-change="entityChange()">
+                                <option value="">---Please Select---</option>
+                                <option ng-repeat="entity in entities" ng-value="'/'+ entity.name">{{entity.name}}</option>
+                            </select>
+                        </div> -->
+                        <div class="col-md-6 col-sm-6 row">
+                            <div class="form-group col-md-6 col-sm-6">
+                                <label><span>Select Entity</span></label>
+                                <select class="form-control form-dropdown" ng-model="entityName" ng-change="entityChange()">
+                                    <option value="">---Please Select---</option>
+                                    <option ng-repeat="entity in entities" ng-value="'/'+ entity.name">{{entity.name}}</option>
+                                </select>
+                            </div>
+                            <div class="form-group col-md-6 col-sm-6" ng-show="deleteSelected">
+                                <label><span>Sub-Entity ID</span></label>
+                                <select class="form-control form-dropdown" ng-model="subEntityId" ng-change="">
+                                    <option value="">---Select ID ---</option>
+                                    <option ng-repeat="subEntity in subEntities" ng-value="'('+ subEntity.ID + ')'">{{subEntity.ID}}</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-sm-12 col-md-12 row" ng-show="showParam">
+                        <div class="form-group col-md-6 col-sm-6"> 
+                            <label><span>Parameter</span></label>
+                            <textarea class="form-control" ng-model="paramBody"></textarea>
+                        </div>
+                        <div class="form-group col-md-6 col-sm-6"> 
+                            <label><span>Parameter Example</span></label>
+                            <textarea class="form-control detail-form-input">{{paramExample}}</textarea>
+                        </div>
+                    </div>
+                </div>
+                <div class="text-center">
+                    <button type="button" class="btn btn-primary" ng-click="tryItOut()" >Try it Out!</button>
+                </div>
+
+                <div> 
+                    <div class="form-group col-md-12 col-sm-12">
+                        <label><span>Response Body</span></label>
+                        <pre class="form-control">{{responseBody}}</pre>
+                    </div>
+                </div>
+        
+            </div>
+            </form>
+            <div class="clear"></div>
+        </div>
+    </div>
+
+
+</div>
