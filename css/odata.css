@@ -1,0 +1,13 @@
+textarea.form-control{
+    min-height: 127px !important;
+    height: auto;
+}
+pre.form-control{
+    background-color: #eee;
+    margin-bottom: 5px;
+    padding: 5px;
+    margin: 0px;
+    border: 1px solid #ccc;
+    overflow-y: scroll;
+    height: 175px;
+}
