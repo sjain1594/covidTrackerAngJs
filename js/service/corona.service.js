@@ -7,10 +7,10 @@ app.service('coronaService', ['$http' , "$q", function($http, $q){
             method: 'GET',
             cache: true,
         })
-        .success(function (data) {
-            deferred.resolve(data);
-        })
-        .error(function (msg) {
+        .then(function (reponse) {
+            deferred.resolve(reponse.data);
+        }
+        ,function (msg) {
             deferred.reject(msg);
         });
         return deferred.promise;
@@ -23,10 +23,9 @@ app.service('coronaService', ['$http' , "$q", function($http, $q){
             method: 'GET',
             cache: true,
         })
-        .success(function(resp){
-            deferred.resolve(resp);
-        })
-        .error(function (msg) {
+        .then(function(response){
+            deferred.resolve(response.data);
+        },function (msg) {
             cb(msg);
         });
         return deferred.promise;
