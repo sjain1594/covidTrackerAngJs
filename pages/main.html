@@ -5,6 +5,9 @@
             <span class="visually-hidden">Loading...</span>
             </div>
         </div>
+        <h5 class="text-center text-danger" ng-if="showErrMsg">
+            {{errorMsg}}
+        </h5>
         <div class="pagecontainer">
             <div class="ele-margin-bottom cmn-hdr-wrap">
                 <span class="cmn-hdr-txt">Crude Operation Report</span>
@@ -72,7 +75,7 @@
         </div>
 
         <!-- Confirmation Modal -->
-        <div class="modal fade" id="deleteProductModal" tabindex="-1" aria-labelledby="deleteProductModalLabel" aria-hidden="true">
+        <!-- <div class="modal fade" id="deleteProductModal" tabindex="-1" aria-labelledby="deleteProductModalLabel" aria-hidden="true">
             <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
@@ -88,7 +91,8 @@
                 </div>
             </div>
             </div>
-        </div>
+        </div> -->
+        <div confirm-Dir></div>
 
         <!-- Edit Product Modal -->
         <div class="modal fade" id="editProductModal" tabindex="-1" aria-labelledby="editProductModalLabel" aria-hidden="true">

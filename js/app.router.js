@@ -1,3 +1,44 @@
+// var app = angular.module('app',['ui.router']);
+// app.config(['$stateProvider','$urlRouterProvider',function($stateProvider,$urlRouterProvider){
+//    $stateProvider
+//    .state('covid',{
+//     url: '/covid',
+//     views: {
+//         main: {
+//           templateUrl: "pages/covid.html",
+//           controller: "cases"
+//         }
+//     }
+//    })
+//    .state('main',{
+//     url: '/main',
+//     views:{
+//         main:{
+//             templateUrl:'pages/main.html',
+//             controller:'crudeOperation'
+//         }
+//     }
+//    })
+//    .state('odata',{
+//     url: '/odata',
+//     views:{
+//         main:{
+//             templateUrl:'pages/odata.html',
+//             controller:'odata'
+//         }
+//     }
+// })
+// }])
+// .state("edit", {
+//     url: "/edit/:id",
+//     views: {
+//       main: {
+//         templateUrl: "----",
+//         controller: "---"
+//       }
+//     }
+//   })
+
 var app = angular.module('app',['ngRoute']);
 app.config(['$routeProvider',function($routeProvider){
    $routeProvider
@@ -60,6 +101,20 @@ app.controller('crudeOperation', ['$scope','mainService' ,function($scope, mainS
     //$scope.showCountryData = false;
     $scope.showData = false;
     $scope.rowData = {};
+    $scope.errorMsg = "";
+    //$scope.showErrMsg = false;
+
+    //function to handle error
+    $scope.errorFunc = function(errorMsg){
+        if(errorMsg){
+            $scope.errorMsg = errorMsg;
+            $scope.showErrMsg = true;
+        }else{
+            $scope.errorMsg = "";
+            $scope.showErrMsg = false;
+        }
+    }
+
     //function to get data of table...
     setTimeout(()=>{
         mainService.getAllData().then(function(response){
@@ -68,6 +123,7 @@ app.controller('crudeOperation', ['$scope','mainService' ,function($scope, mainS
             $scope.dataTable(response);
         }).catch(function(err){
             console.log(err);
+            $scope.errorFunc(err.error.message);
         })
     },500)
 
@@ -171,6 +227,7 @@ app.controller('crudeOperation', ['$scope','mainService' ,function($scope, mainS
             dTable.row.add(response).draw();
         }).catch(function(err){
             console.log(err);
+            $scope.errorFunc(err.error.message);
         })
     };
 
@@ -182,6 +239,7 @@ app.controller('crudeOperation', ['$scope','mainService' ,function($scope, mainS
             dTable.row(response.id - 1).data( $scope.editTableData ).draw();
         }).catch(function(err){
             console.log(err);
+            $scope.errorFunc(err.error.message);
         })
     };
 
@@ -194,6 +252,7 @@ app.controller('crudeOperation', ['$scope','mainService' ,function($scope, mainS
             //$scope.rowData.remove().draw();  
          }).catch(function(err){
             console.log(err);
+            $scope.errorFunc(err.error.message);
          })
     
     };
@@ -211,6 +270,19 @@ app.controller('odata', ['$scope','odataService', 'mainConfig' ,function($scope,
     $scope.filterSel = false;
     $scope.paginationSel = false;
     $scope.apiRootUrl = mainConfig.odataV3Url;
+    $scope.errorMsg = "";
+    //$scope.showErrMsg = false;
+
+    //function to handle error
+    $scope.errorFunc = function(errorMsg){
+        if(errorMsg){
+            $scope.errorMsg = errorMsg;
+            $scope.showErrMsg = true;
+        }else{
+            $scope.errorMsg = "";
+            $scope.showErrMsg = false;
+        }
+    }
 
     //api to get entity data for dropdown...
     setTimeout(()=>{
@@ -219,6 +291,7 @@ app.controller('odata', ['$scope','odataService', 'mainConfig' ,function($scope,
             $scope.entities = response.value;
         }).catch(function(err){
             console.log(err);
+            $scope.errorFunc(err);
         })
     },500)
 
@@ -359,6 +432,7 @@ app.controller('odata', ['$scope','odataService', 'mainConfig' ,function($scope,
         }).catch(function(err){
             console.log(err);
             $scope.deleteSelected = false;
+            $scope.errorFunc(err);
         })
         $scope.filterName = "";
         $scope.subEntityName = "";
