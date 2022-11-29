@@ -1,4 +1,4 @@
-var app = angular.module("app", []);
+//var app = angular.module("app", []);
 app.controller('cases', ['$scope','coronaService' ,function($scope, coronaService){
     $scope.showOverallDetails = false;
     $scope.showCountryCases = false;
@@ -6,6 +6,7 @@ app.controller('cases', ['$scope','coronaService' ,function($scope, coronaServic
     $scope.errorMsg = "";
     $scope.showErrMsg = false;
 
+    //this show global corona cases info...
     coronaService.findCoronaDetails().then(function(res){
         $scope.showOverallDetails = true;
         $scope.confirmedCases = res.confirmed.value;
@@ -14,15 +15,16 @@ app.controller('cases', ['$scope','coronaService' ,function($scope, coronaServic
         $scope.LastUpdatedTime = res.lastUpdate;
     });
        
+    // country wise corona cases 
     $scope.doSearch = function(){
     $scope.errorMsg = "";
     $scope.showErrMsg = false;
     $scope.showCountryCases = false;
     coronaService.findCasesByCountry($scope.searchCountry).then(function(res){
-        $scope.confirmedCases = res.confirmed.value;
-        $scope.RecoveredCases = res.recovered.value;
-        $scope.Deaths = res.deaths.value;
-        $scope.LastUpdatedTime = res.lastUpdate;
+        $scope.confirmedCasesByCountry = res.confirmed.value;
+        $scope.RecoveredCasesByCountry = res.recovered.value;
+        $scope.DeathsByCountry = res.deaths.value;
+        $scope.LastUpdatedTimeByCountry = res.lastUpdate;
         $scope.showCountryCases = true;
 
         }).catch(function(err){
@@ -32,4 +34,3 @@ app.controller('cases', ['$scope','coronaService' ,function($scope, coronaServic
         })
     }
 }]);
-

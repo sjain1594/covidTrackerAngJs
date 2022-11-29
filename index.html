@@ -21,13 +21,17 @@
         <script src="https://cdn.datatables.net/1.12.1/js/dataTables.bootstrap4.min.js"></script>  
         <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.3/angular.min.js"></script>
         <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.3/angular-route.js"></script>
-        
+        <!-- <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/angular-ui-router/0.2.15/angular-ui-router.js"></script> -->
+        <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/angular-ui-router/0.2.15/angular-ui-router.js" integrity="sha512-cxtc7eXNo4oJ84HFtzq9KE/jZ5icjigmuVTuWGH+yca/mreM0FhRqZid86TKPAbqjG4G4jAeIiPun0DvbzGJCA==" crossorigin="anonymous" referrerpolicy="no-referrer"></script> -->
         <script src="/js/app.router.js"></script>
+        <!-- <script type="text/javascript" src="/js/cases.js"></script>
+        <script type="text/javascript" src="/js/crudeOperation.js"></script>
+        <script type="text/javascript" src="/js/odata.js"></script> -->
         <script type="text/javascript" src="/js/service/corona.service.js"></script>
         <script type="text/javascript" src="/js/service/main.service.js"></script>
         <script type="text/javascript" src="/js/service/odata.service.js"></script>
         <script type="text/javascript" src="/js/config/config.js"></script>
-
+        <script src="/directives/confirmationDirective.js"></script>
 
     </head>
     <body ng-app="app">
@@ -46,5 +50,16 @@
             </ul>
         </header>
         <div ng-view></div>
+        <!-- <div ui-view></div> -->
     </body>
+
+    <!-- <body>
+        //Navigation Bar
+        <nav-dir></nav-dir>
+    
+        //Angular Templates called here
+        <div ui-view></div>
+
+    </body> -->
+
 </html>
