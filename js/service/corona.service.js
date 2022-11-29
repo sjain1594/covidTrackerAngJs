@@ -1,9 +1,9 @@
-
-app.service('coronaService', ['$http' , "$q", function($http, $q){
+// function to find cases by country...
+app.service('coronaService', ['$http' , "$q","mainConfig",function($http,$q,mainConfig){
     this.findCasesByCountry = function(COUNTRY_NAME){
         var deferred = $q.defer();
         $http({
-            url:'https://covid19.mathdro.id/api/countries/' + COUNTRY_NAME,
+            url: mainConfig.coronaUrl + '/countries/' + COUNTRY_NAME,
             method: 'GET',
             cache: true,
         })
@@ -16,10 +16,11 @@ app.service('coronaService', ['$http' , "$q", function($http, $q){
         return deferred.promise;
     };
 
+// function to find global cases...
     this.findCoronaDetails = function(){
         var deferred = $q.defer();
         $http({
-            url:'https://covid19.mathdro.id/api',
+            url: mainConfig.coronaUrl,
             method: 'GET',
             cache: true,
         })

@@ -1,5 +1,6 @@
 app.service("mainService",["$http","$q","mainConfig",function($http,$q,mainConfig) {
 
+    //api to get table data..
     this.getAllData = function () { 
         var deferred = $q.defer();
         $http({
@@ -17,6 +18,7 @@ app.service("mainService",["$http","$q","mainConfig",function($http,$q,mainConfi
         return deferred.promise;
     };
   
+    //api to add new product in table...
     this.addNewData = function (dataJson) {
         var deferred = $q.defer();
         $http({
@@ -34,6 +36,7 @@ app.service("mainService",["$http","$q","mainConfig",function($http,$q,mainConfi
         return deferred.promise;
     };
 
+    //api to update product in table....
     this.updateData = function (dataJson,id) {
         var deferred = $q.defer();
         $http({
@@ -51,6 +54,7 @@ app.service("mainService",["$http","$q","mainConfig",function($http,$q,mainConfi
         return deferred.promise;
     };
 
+    //api to delete product...
     this.deleteData = function (id) {
         var deferred = $q.defer();
         $http({

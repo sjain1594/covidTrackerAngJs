@@ -1,5 +1,6 @@
 app.service("odataService",["$http","$q","mainConfig",function($http,$q,mainConfig) {
 
+    //api to get entity data..
     this.getEntityData = function(){
         var deferred = $q.defer();
         $http({
@@ -17,6 +18,7 @@ app.service("odataService",["$http","$q","mainConfig",function($http,$q,mainConf
         return deferred.promise;
     }
 
+    //api to get sub-entity data..
     this.getSubEntityData = function(entityName){
         var deferred = $q.defer();
         $http({
@@ -34,6 +36,7 @@ app.service("odataService",["$http","$q","mainConfig",function($http,$q,mainConf
         return deferred.promise;
     }
 
+    //generation of custom api according to filters selection and method selection..
     this.tryItOut = function (dataJson,method,entityName,subEntityId,filterName,subEntityName,number,value,pageSize,pageNo) {
         if(method){
             if(method == "GET" || method == "DELETE"){

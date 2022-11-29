@@ -1,8 +1,9 @@
 app.service("mainConfig", [
 
     function(){
-      this.dataUrl = "https://fakestoreapi.com/products",
-      this.editDeleteDataUrl = function (id) {
+        this.coronaUrl = "https://covid19.mathdro.id/api",
+        this.dataUrl = "https://fakestoreapi.com/products",
+        this.editDeleteDataUrl = function (id) {
             return "https://fakestoreapi.com/products/" + id;
         },
        // this.odataV4Url = "https://services.odata.org/TripPinRESTierService/(S(uysxiwe1blb3dqplrneqg5bm))/people",

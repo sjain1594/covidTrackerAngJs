@@ -8,7 +8,7 @@ app.controller('crudeOperation', ['$scope','mainService' ,function($scope, mainS
     //$scope.countryName = "";
     //$scope.showCountryData = false;
     $scope.showData = false;
-
+    $scope.showBtn = true;
     setTimeout(()=>{
         mainService.getAllData().then(function(response){
             $scope.showData = true;
@@ -65,6 +65,7 @@ app.controller('crudeOperation', ['$scope','mainService' ,function($scope, mainS
             "category":"",
             "image":""
           }
+          $scope.showBtn = true;
     };
     
     // function to OPEN EDIT PRODUCT MODEL... 
@@ -80,6 +81,7 @@ app.controller('crudeOperation', ['$scope','mainService' ,function($scope, mainS
                 "category":rowData.category,
                 "image":rowData.image
             }
+            $scope.showBtn = false;
         });
     //},
 
