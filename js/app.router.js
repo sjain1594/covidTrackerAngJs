@@ -22,6 +22,7 @@ app.controller('cases', ['$scope','coronaService' ,function($scope, coronaServic
     $scope.errorMsg = "";
     $scope.showErrMsg = false;
 
+    //this show global corona cases info...
     coronaService.findCoronaDetails().then(function(res){
         $scope.showOverallDetails = true;
         $scope.confirmedCases = res.confirmed.value;
@@ -30,15 +31,16 @@ app.controller('cases', ['$scope','coronaService' ,function($scope, coronaServic
         $scope.LastUpdatedTime = res.lastUpdate;
     });
        
+    // country wise corona cases 
     $scope.doSearch = function(){
     $scope.errorMsg = "";
     $scope.showErrMsg = false;
     $scope.showCountryCases = false;
     coronaService.findCasesByCountry($scope.searchCountry).then(function(res){
-        $scope.confirmedCases = res.confirmed.value;
-        $scope.RecoveredCases = res.recovered.value;
-        $scope.Deaths = res.deaths.value;
-        $scope.LastUpdatedTime = res.lastUpdate;
+        $scope.confirmedCasesByCountry = res.confirmed.value;
+        $scope.RecoveredCasesByCountry = res.recovered.value;
+        $scope.DeathsByCountry = res.deaths.value;
+        $scope.LastUpdatedTimeByCountry = res.lastUpdate;
         $scope.showCountryCases = true;
 
         }).catch(function(err){
@@ -57,53 +59,63 @@ app.controller('crudeOperation', ['$scope','mainService' ,function($scope, mainS
     //$scope.countryName = "";
     //$scope.showCountryData = false;
     $scope.showData = false;
-
+    $scope.rowData = {};
+    //function to get data of table...
     setTimeout(()=>{
         mainService.getAllData().then(function(response){
             $scope.showData = true;
             $scope.tableData = response;
-            dTable = $('#productTable').DataTable({
-                "order": [],
-                "data":response,
-                "sAjaxDataProp": "",
-                "aoColumns": [
-                    { "title": "id", "data": "id", "visible": false,},
-                    { "title": "Image", "data": "image", 'orderable': false ,
-                      "render": function ( data) {
-                        return '<img src="'+ data +'" width="40px">';
-                        }
-                    },	              
-                    { "title": "Title", "data": "title" },
-                    { "title": "Price", "data": "price", 
-                        "render":function(data){
-                            return'<span>'+"$"+ data+'</span>'
-                        } 
-                    },
-                    { "title": "Description", "data": "description" },
-                    { "title": "Category", "data": "category" },
-                    { "title": "Rating", "data": "rating",'orderable': false,
-                        "render": function(data){
-                            return '<span>'+data.rate+'<i class="fa fa-star color-yellow" aria-hidden="true"></i></span>'
-                        }
-                    },
-                    // { "title": "Database User Name", "data": "username" },
-                    {
-                        'title': "Action",
-                        'orderable': false,
-                        'render': function (data) {
-                            return '<span class="editCls" ng-click="editClick()" data-bs-toggle="modal" data-bs-target="#editProductModal"><i class="fa fa-edit clickableImage" aria-hidden="true"></i></span>'+
-                            '<span class="deleteCls" ng-click="deleteClick()" data-bs-toggle="modal" data-bs-target="#deleteProductModal"><i class="fa fa-trash clickableImage" aria-hidden="true"></i></span>'
-                        } 
-                    }
-                ],
-                // "fnInitComplete": function(oSettings, alertList) {
-                    
-                // }
-            });
+            $scope.dataTable(response);
         }).catch(function(err){
             console.log(err);
         })
     },500)
+
+    //function to create datatable...
+    $scope.dataTable = function(response){
+        dTable = $('#productTable').DataTable({
+            "order": [],
+            "data":response,
+            "sAjaxDataProp": "",
+            "aoColumns": [
+                { "title": "id", "data": "id", "visible": false,},
+                { "title": "Image", "data": "image", 'orderable': false ,
+                  "render": function ( data) {
+                    return '<img src="'+ data +'" width="40px">';
+                    }
+                },	              
+                { "title": "Title", "data": "title" },
+                { "title": "Price", "data": "price", 
+                    "render":function(data){
+                        return'<span>'+"$"+ data+'</span>'
+                    } 
+                },
+                { "title": "Description", "data": "description" },
+                { "title": "Category", "data": "category" },
+                // { "title": "Rating", "data": "rating",'orderable': false,
+                //     "render": function(data){
+                //         return '<span>'+data.rate+'<i class="fa fa-star color-yellow" aria-hidden="true"></i></span>'
+                //     }
+                // },
+                // { "title": "Database User Name", "data": "username" },
+                {
+                    'title': "Action",
+                    'orderable': false,
+                    'render': function (data) {
+                        return '<span class="editCls" ng-click="editClick()" data-bs-toggle="modal" data-bs-target="#editProductModal"><i class="fa fa-edit clickableImage" aria-hidden="true"></i></span>'+
+                        '<span class="deleteCls" ng-click="deleteClick()" data-bs-toggle="modal" data-bs-target="#deleteProductModal"><i class="fa fa-trash clickableImage" aria-hidden="true"></i></span>'
+                    } 
+                }
+            ],
+             "fnInitComplete": function(oSettings, alertList) {
+                $scope.editClick();
+                $scope.deleteClick();
+             }
+        });
+        $scope.editClick();
+        $scope.deleteClick();
+
+    }
 
     // function to OPEN ADD PRODUCT MODEL... 
     $scope.addNewProductModel =  function() {
@@ -117,8 +129,8 @@ app.controller('crudeOperation', ['$scope','mainService' ,function($scope, mainS
     };
     
     // function to OPEN EDIT PRODUCT MODEL... 
-    //$scope.editClick = function(){
-        $('body').off('click').on('click', '.editCls', function(e){
+    $scope.editClick = function(){
+        $('#productTable').off('click').on('click', '.editCls', function(e){
             e.preventDefault();
             var rowData =  dTable.row( $(this).parents('tr') ).data();
             $scope.productId = rowData.id;
@@ -129,37 +141,57 @@ app.controller('crudeOperation', ['$scope','mainService' ,function($scope, mainS
                 "category":rowData.category,
                 "image":rowData.image
             }
+            /* setting the data from grid to the form elements in the modal */
+            // $scope.options = {
+            //     'backdrop': 'static',
+            //     'show': true,
+            //     'keyboard': true,
+            // }
+            
+            //$('#addNewProductModel').modal($scope.options);
+            //$("#editProductModal").modal("show");
         });
-    //},
+    },
 
-    // function to DELETE PRODUCT...
-    //$scope.deleteClick = function(){
+    // function to get DELETE PRODUCT...
+    $scope.deleteClick = function(){
         $('body').off('click').on('click', '.deleteCls', function(e){ 
             e.preventDefault();
             var rowData =  dTable.row( $(this).parents('tr') ).data();
             $scope.productId = rowData.id;
+            $scope.rowData = $(this);
         });
-    //}
-       
+    }
+      
+    // function to add product...
     $scope.addProduct = function(){
         mainService.addNewData($scope.product).then(function(response){
             $scope.addTableData = response;
+            dTable = $('#productTable').DataTable();
+            dTable.row.add(response).draw();
         }).catch(function(err){
             console.log(err);
         })
     };
 
+    //function to edit product...
     $scope.UpdateData = function(){
         mainService.updateData($scope.product,$scope.productId).then(function(response){
             $scope.editTableData = response;
+            dTable = $('#productTable').DataTable();
+            dTable.row(response.id - 1).data( $scope.editTableData ).draw();
         }).catch(function(err){
             console.log(err);
         })
     };
 
+    //function to delete product...
     $scope.deleteProduct = function(){
         mainService.deleteData($scope.productId).then(function(response){
-            $scope.deleteTableData = response;    
+            $scope.deleteTableData = response;  
+            dTable = $('#productTable').DataTable();
+            dTable.row(($scope.rowData).parents('tr')).remove().draw();
+            //$scope.rowData.remove().draw();  
          }).catch(function(err){
             console.log(err);
          })
@@ -180,6 +212,7 @@ app.controller('odata', ['$scope','odataService', 'mainConfig' ,function($scope,
     $scope.paginationSel = false;
     $scope.apiRootUrl = mainConfig.odataV3Url;
 
+    //api to get entity data for dropdown...
     setTimeout(()=>{
         odataService.getEntityData().then(function(response){
             $scope.showData = true;
@@ -189,10 +222,12 @@ app.controller('odata', ['$scope','odataService', 'mainConfig' ,function($scope,
         })
     },500)
 
+    //function to show data in param example div...
     $scope.paramExample = JSON.stringify({
         "odata.type":"ODataDemo.<entityName>"
     },undefined, 2);
 
+    //function to set/reset/show/hide the fields...
     $scope.operationValue = function(){
         if($scope.selOperation == "QueringData"){
             $scope.Quering = true;
@@ -235,6 +270,7 @@ app.controller('odata', ['$scope','odataService', 'mainConfig' ,function($scope,
         }
     }
 
+    // function to show - hide feild acc to filter selection...
     $scope.filterChange = function(){
         if($scope.filterName == "select" || $scope.filterName == "orderby"){
             $scope.topSel = false;
@@ -299,6 +335,7 @@ app.controller('odata', ['$scope','odataService', 'mainConfig' ,function($scope,
         }
     }
 
+    // function to show/hide param body & set-reset responsearea...
     $scope.methodValue = function(){
         if($scope.method == "GET" || $scope.method == "DELETE"){
             $scope.showParam = false;
@@ -314,6 +351,7 @@ app.controller('odata', ['$scope','odataService', 'mainConfig' ,function($scope,
         // }
     }
 
+    //function to get sub-entity data... 
     $scope.entityChange = function(){
         odataService.getSubEntityData($scope.entityName).then(function(response){
             $scope.subEntities = response.value;
@@ -322,6 +360,13 @@ app.controller('odata', ['$scope','odataService', 'mainConfig' ,function($scope,
             console.log(err);
             $scope.deleteSelected = false;
         })
+        $scope.filterName = "";
+        $scope.subEntityName = "";
+        $scope.number = "";
+        $scope.value = "";
+        $scope.pageSize = "";
+        $scope.pageNo = "";
+        $scope.responseBody = "";
     }
 
     // $scope.pageSizeChange = function(){
@@ -332,6 +377,7 @@ app.controller('odata', ['$scope','odataService', 'mainConfig' ,function($scope,
     //     console.log($scope.pageNo);
     // }
 
+    //function to run on try it out button...
     $scope.tryItOut = function(){
         console.log($scope.paramBody);
         console.log($scope.entityName);

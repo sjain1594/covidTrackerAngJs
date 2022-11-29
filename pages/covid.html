@@ -3,6 +3,7 @@
         <h2 class=" text-primary text-center mb-4">Corona Tracking Report</h2>
         <div class="container-fluid">
 
+            <!-- this block show global cases info -->
             <div ng-if="showOverallDetails">
                 <div class="col-sm-12 row">
                     <div class="col-sm-3"> 
@@ -25,7 +26,7 @@
                 </div>
             </div>
             <hr>
-
+        <!-- this block show cases info by country  -->
             <form class="form-inline">
                 <div class="col-sm-12 form-group row">
                     <label class="col-sm-2 text-primary col-form-label">Enter Country Name:</label>
@@ -40,19 +41,19 @@
             <div ng-if="showCountryCases">
                 <div class="row">
                     <div class="col-sm-2 text-primary">Confirmed Cases:</div>
-                    <div class="col-sm-2 text-warning">{{confirmedCases}}</div>
+                    <div class="col-sm-2 text-warning">{{confirmedCasesByCountry}}</div>
                 </div>
                 <div class="row">
                     <div class="col-sm-2 text-primary">Recovered Cases:</div>
-                    <div class="col-sm-2 text-success">{{RecoveredCases}}</div>
+                    <div class="col-sm-2 text-success">{{RecoveredCasesByCountry}}</div>
                 </div>
                 <div class="row">
                     <div class="col-sm-2 text-primary">Death:</div>
-                    <div class="col-sm-2 text-danger">{{Deaths}}</div>
+                    <div class="col-sm-2 text-danger">{{DeathsByCountry}}</div>
                 </div>
                 <div class="row">
                     <div class="col-sm-2 text-primary">Last Updated Time:</div>
-                    <div class="col-sm-2 text-muted">{{LastUpdatedTime | date : "medium"}}</div>
+                    <div class="col-sm-2 text-muted">{{LastUpdatedTimeByCountry | date : "medium"}}</div>
                 </div>
             </div>
             <h5 class="text-center text-danger" ng-if="showErrMsg">
