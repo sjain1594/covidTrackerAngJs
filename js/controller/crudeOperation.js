@@ -1,14 +1,34 @@
-//var app = angular.module('app',[]);
-
-app.controller('crudeOperation', ['$scope','mainService' ,function($scope, mainService){
+var crudeContrl = 
+function($scope, mainService){
     $scope.tableData = {};
     $scope.addTableData = {};
     $scope.editTableData = {};
     $scope.deleteTableData = {};
+    $scope.product ={
+        "title":"",
+        "description":"",
+        "price":"",
+        "category":"",
+        "image":""
+    }
     //$scope.countryName = "";
     //$scope.showCountryData = false;
     $scope.showData = false;
     $scope.rowData = {};
+    $scope.errorMsg = "";
+    //$scope.showErrMsg = false;
+
+    //function to handle error
+    $scope.errorFunc = function(errorMsg){
+        if(errorMsg){
+            $scope.errorMsg = errorMsg;
+            $scope.showErrMsg = true;
+        }else{
+            $scope.errorMsg = "";
+            $scope.showErrMsg = false;
+        }
+    }
+
     //function to get data of table...
     setTimeout(()=>{
         mainService.getAllData().then(function(response){
@@ -17,6 +37,7 @@ app.controller('crudeOperation', ['$scope','mainService' ,function($scope, mainS
             $scope.dataTable(response);
         }).catch(function(err){
             console.log(err);
+            $scope.errorFunc(err);
         })
     },500)
 
@@ -57,13 +78,12 @@ app.controller('crudeOperation', ['$scope','mainService' ,function($scope, mainS
                 }
             ],
              "fnInitComplete": function(oSettings, alertList) {
-                $scope.editClick();
-                $scope.deleteClick();
+               //myFunc();
+               $scope.editClick();
              }
         });
-        $scope.editClick();
-        $scope.deleteClick();
-
+       //myFunc();
+       $scope.editClick();
     }
 
     // function to OPEN ADD PRODUCT MODEL... 
@@ -78,9 +98,11 @@ app.controller('crudeOperation', ['$scope','mainService' ,function($scope, mainS
     };
     
     // function to OPEN EDIT PRODUCT MODEL... 
-    $scope.editClick = function(){
-        $('#productTable').off('click').on('click', '.editCls', function(e){
-            e.preventDefault();
+    $scope.editClick = function() {
+        $('body').off('click').on('click', '.editCls', function(e){ 
+            console.log("edit started");
+            console.log($scope.product);
+            dTable = $('#productTable').DataTable();
             var rowData =  dTable.row( $(this).parents('tr') ).data();
             $scope.productId = rowData.id;
             $scope.product ={
@@ -90,6 +112,8 @@ app.controller('crudeOperation', ['$scope','mainService' ,function($scope, mainS
                 "category":rowData.category,
                 "image":rowData.image
             }
+            console.log(rowData);
+            console.log($scope.product);
             /* setting the data from grid to the form elements in the modal */
             // $scope.options = {
             //     'backdrop': 'static',
@@ -120,6 +144,7 @@ app.controller('crudeOperation', ['$scope','mainService' ,function($scope, mainS
             dTable.row.add(response).draw();
         }).catch(function(err){
             console.log(err);
+            $scope.errorFunc(err.error.message);
         })
     };
 
@@ -131,6 +156,7 @@ app.controller('crudeOperation', ['$scope','mainService' ,function($scope, mainS
             dTable.row(response.id - 1).data( $scope.editTableData ).draw();
         }).catch(function(err){
             console.log(err);
+            $scope.errorFunc(err.error.message);
         })
     };
 
@@ -143,8 +169,9 @@ app.controller('crudeOperation', ['$scope','mainService' ,function($scope, mainS
             //$scope.rowData.remove().draw();  
          }).catch(function(err){
             console.log(err);
+            $scope.errorFunc(err.error.message);
          })
     
     };
 
-}]);
+};

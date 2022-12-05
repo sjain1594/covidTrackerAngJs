@@ -1,4 +1,4 @@
-app.controller('odata', ['$scope','odataService', 'mainConfig' ,function($scope, odataService, mainConfig){
+var odataContrl = function($scope, odataService, mainConfig){
     $scope.showData = false;
     $scope.showParam = true;
     $scope.deleteSelected = false;
@@ -9,6 +9,19 @@ app.controller('odata', ['$scope','odataService', 'mainConfig' ,function($scope,
     $scope.filterSel = false;
     $scope.paginationSel = false;
     $scope.apiRootUrl = mainConfig.odataV3Url;
+    $scope.errorMsg = "";
+    //$scope.showErrMsg = false;
+
+    //function to handle error
+    $scope.errorFunc = function(errorMsg){
+        if(errorMsg){
+            $scope.errorMsg = errorMsg;
+            $scope.showErrMsg = true;
+        }else{
+            $scope.errorMsg = "";
+            $scope.showErrMsg = false;
+        }
+    }
 
     //api to get entity data for dropdown...
     setTimeout(()=>{
@@ -17,6 +30,7 @@ app.controller('odata', ['$scope','odataService', 'mainConfig' ,function($scope,
             $scope.entities = response.value;
         }).catch(function(err){
             console.log(err);
+            $scope.errorFunc(err);
         })
     },500)
 
@@ -157,6 +171,7 @@ app.controller('odata', ['$scope','odataService', 'mainConfig' ,function($scope,
         }).catch(function(err){
             console.log(err);
             $scope.deleteSelected = false;
+            $scope.errorFunc(err);
         })
         $scope.filterName = "";
         $scope.subEntityName = "";
@@ -198,4 +213,4 @@ app.controller('odata', ['$scope','odataService', 'mainConfig' ,function($scope,
         })
     }
     
-}]);
+};

@@ -1,5 +1,6 @@
 //var app = angular.module("app", []);
-app.controller('cases', ['$scope','coronaService' ,function($scope, coronaService){
+var casesContrl =
+function($scope, coronaService){
     $scope.showOverallDetails = false;
     $scope.showCountryCases = false;
     $scope.searchCountry = "";
@@ -33,4 +34,4 @@ app.controller('cases', ['$scope','coronaService' ,function($scope, coronaServic
             
         })
     }
-}]);
+};
